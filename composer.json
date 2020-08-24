@@ -1,0 +1,26 @@
+{
+    "name": "ilkaynarli/iys",
+    "description": "İleti Yönetim Sistemi (iys.org.tr) Api Servisleri İçin Php Client Kütüphanesi",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ilkay narli",
+            "email": "ilkaynarli@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src"
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.1"
+    }
+}
