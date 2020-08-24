@@ -1,5 +1,5 @@
 {
-    "name": "inarli/iys",
+    "name": "inarli/iys-php-client",
     "description": "İleti Yönetim Sistemi (iys.org.tr) Api Servisleri İçin Php Client Kütüphanesi",
     "type": "library",
     "license": "MIT",
