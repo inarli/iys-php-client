@@ -43,4 +43,8 @@ dump("== Changes ==");
 dump($result);
 
 
+// Create bulk consents with csv file.
+$iys->consentManagement->createFromCsv('example.csv');
+
+
 

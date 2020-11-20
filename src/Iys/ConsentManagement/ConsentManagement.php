@@ -93,4 +93,62 @@ class ConsentManagement extends AbstractEndpoint
         $query = http_build_query(get_defined_vars());
         return $this->httpClient->get($this->consentChangesEndpoint.'?'.$query);
     }
+
+    /**
+     * Recommend : use on the cli
+     * @param string $path
+     * @param int $batchCount
+     * @throws \Exception
+     */
+    public function createFromCsv($path = '/Users/ilkaynarli/Desktop/projects/iys-bulk/proje/csv/data.csv', $batchCount = 100){
+
+        $handle = fopen($path, 'r');
+        if ($handle === false){
+            throw new \Exception('File does not open');
+        }
+        $totalLine = count(file($path));
+        $lastCluster = $totalLine % $batchCount;
+        $pageCount = (int)ceil($totalLine / $batchCount);
+        $page = 0;
+        $processedCount = 0;
+        $consents = [];
+        while(($data = fgetcsv($handle)) !== false){
+            if (count($data) > 0){
+                $consents[] = $this->generateConsent($data[2], $data[0], $data[1], $data[3], $data[4],$data[5]);
+            }
+            $consentCount = count($consents);
+            if ($consentCount === $batchCount || ($pageCount - 1 === $page && $lastCluster === $consentCount)) {
+                $this->sendMultipleCreate($consents);
+                $processedCount += $consentCount;
+                $this->console->debug('Total processed record count : '.$processedCount);
+                $consents = [];
+                $page++;
+            }
+        }
+    }
+
+    /**
+     * @param array $consents
+     * @return bool
+     * @throws \Exception
+     */
+    private function sendMultipleCreate(array $consents): bool
+    {
+        $this->console->debug(count($consents) . ' records sending...');
+        $response = $this->createAsyncMultipleConsent($consents);
+        $this->console->success(count($consents) . ' records sent!');
+        if (!$response->isSuccessful()){
+            if ($response->getErrors()){
+                dump(count($response->getErrors()));
+                foreach ($response->getErrors() as $error){
+                    $index = $error['index'];
+                    $errorConsent = $consents[$index] ?? null;
+                    if ($errorConsent instanceof ConsentModel){
+                        $this->console->error(json_encode($errorConsent->toArray()). ' Hata : '.$error['message']);
+                    }
+                }
+            }
+        }
+        return $response->isSuccessful();
+    }
 }
