@@ -120,7 +120,7 @@ class ConsentManagement extends AbstractEndpoint
             if ($consentCount === $batchCount || ($pageCount - 1 === $page && $lastCluster === $consentCount)) {
                 $this->sendMultipleCreate($consents);
                 $processedCount += $consentCount;
-                $this->console->debug('Total processed record count : '.$processedCount);
+                $this->console->writeLine('Total processed record count : '.$processedCount);
                 $consents = [];
                 $page++;
             }
@@ -134,17 +134,16 @@ class ConsentManagement extends AbstractEndpoint
      */
     private function sendMultipleCreate(array $consents): bool
     {
-        $this->console->debug(count($consents) . ' records sending...');
+        $this->console->writeLine(count($consents) . ' records sending...');
         $response = $this->createAsyncMultipleConsent($consents);
-        $this->console->success(count($consents) . ' records sent!');
+        $this->console->writeLine(count($consents) . ' records sent!');
         if (!$response->isSuccessful()){
             if ($response->getErrors()){
-                dump(count($response->getErrors()));
                 foreach ($response->getErrors() as $error){
                     $index = $error['index'];
                     $errorConsent = $consents[$index] ?? null;
                     if ($errorConsent instanceof ConsentModel){
-                        $this->console->error(json_encode($errorConsent->toArray()). ' Hata : '.$error['message']);
+                        $this->console->writeLine(json_encode($errorConsent->toArray()). ' Hata : '.$error['message']);
                     }
                 }
             }

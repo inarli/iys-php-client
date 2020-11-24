@@ -2,21 +2,21 @@
 
 namespace Iys;
 
-use Shalvah\Clara\Clara;
+use Utils\Console;
 
 abstract class AbstractEndpoint
 {
     /** @var $httpClient HttpClient */
     protected $httpClient;
     /**
-     * @var Clara
+     * @var Console
      */
     protected $console;
 
     public function __construct($httpClient)
     {
         $this->httpClient = $httpClient;
-        $this->console = new Clara('iys');
+        $this->console = new Console();
     }
 
 }
