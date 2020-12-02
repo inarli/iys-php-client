@@ -100,7 +100,7 @@ class ConsentManagement extends AbstractEndpoint
      * @param int $batchCount
      * @throws \Exception
      */
-    public function createFromCsv($path = '/Users/ilkaynarli/Desktop/projects/iys-bulk/proje/csv/data.csv', $batchCount = 100){
+    public function createFromCsv($path, $batchCount = 100){
 
         $handle = fopen($path, 'r');
         if ($handle === false){
