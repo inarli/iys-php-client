@@ -83,7 +83,7 @@ class HttpClient
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
             CURLOPT_POSTFIELDS => $this->preparePayload($payload),
-            CURLOPT_VERBOSE => true,
+            CURLOPT_VERBOSE => false,
         ]);
         return $this->handleResponse();
     }
