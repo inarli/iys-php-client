@@ -223,7 +223,7 @@ class HttpClient
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
             CURLOPT_POSTFIELDS => http_build_query($payload),
-            CURLOPT_VERBOSE => true
+            CURLOPT_VERBOSE => false
         ]);
         return $this->handleResponse();
     }
