@@ -57,7 +57,7 @@ class Authentication extends AbstractEndpoint
         $oauth2Token = new OauthToken();
         $oauth2Token->setAccessToken($response->getData()['access_token']);
         $oauth2Token->setRefreshToken($response->getData()['refresh_token']);
-        $oauth2Token->setExpiresIn($response->getData()['refresh_expires_in']);
+        $oauth2Token->setExpiresIn($response->getData()['expires_in']);
         $oauth2Token->setTokenType($response->getData()['token_type']);
         $oauth2Token->setRefreshExpiresIn($response->getData()['refresh_expires_in']);
         return $oauth2Token;
