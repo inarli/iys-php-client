@@ -132,7 +132,7 @@ class ConsentManagement extends AbstractEndpoint
      * @return bool
      * @throws \Exception
      */
-    private function sendMultipleCreate(array $consents): bool
+    private function sendMultipleCreate(array $consents)
     {
         $this->console->writeLine(count($consents) . ' records sending...');
         $response = $this->createAsyncMultipleConsent($consents);
@@ -141,7 +141,10 @@ class ConsentManagement extends AbstractEndpoint
             if ($response->getErrors()){
                 foreach ($response->getErrors() as $error){
                     $index = $error['index'];
-                    $errorConsent = $consents[$index] ?? null;
+                    $errorConsent = null;
+                    if (isset($consents[$index])) {
+                        $errorConsent = $consents[$index];
+                    }
                     if ($errorConsent instanceof ConsentModel){
                         $this->console->writeLine(json_encode($errorConsent->toArray()). ' Hata : '.$error['message']);
                     }
