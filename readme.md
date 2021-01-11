@@ -14,7 +14,7 @@ $password = 'YOUR_PASSWORD';
 $iys = new Iys\IysApi($apiUri,$iysCode,$iysBrandCode);
 
 // login to iys system
-$login = $iys->authentication->login($email, $password);
+$login = $iys->authentication->loginWithOauth2($email, $password);
 if ($login instanceof \Iys\Auth\Response\Token){
     $iys->setToken($login->getAccessToken());
     $iys->setRefreshToken($login->getRefreshToken());

@@ -8,6 +8,7 @@
 
     $iys = new Iys\IysApi($apiUri,$iysCode,$iysBrandCode);
 
+    // Oauth login is not available on production since Jan 1st, 2021. Oauth2 is suggested
     $login = $iys->authentication->login($email, $password);
     if ($login instanceof \Iys\Auth\Response\Token){
         $iys->setToken($login->getAccessToken());
